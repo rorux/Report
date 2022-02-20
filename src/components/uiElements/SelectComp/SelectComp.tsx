@@ -17,8 +17,10 @@ const SelectComp: React.FC<TSelectComp> = ({
       onChange={onChange}
       size="small"
     >
-      {values.map((value) => (
-        <MenuItem value={value.val}>{value.title}</MenuItem>
+      {values.map((value, ind) => (
+        <MenuItem key={ind} value={value.val}>
+          {value.title}
+        </MenuItem>
       ))}
     </Select>
   );

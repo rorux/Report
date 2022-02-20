@@ -1,17 +1,50 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import { SelectChangeEvent } from "@mui/material/Select";
+import { Divider } from "@mui/material";
 import Title from "../Title";
 import DatePickerComp from "../uiElements/DatePickerComp";
 import SelectComp from "../uiElements/SelectComp";
+import StatHeader from "../StatHeader";
+import StatRow from "../StatRow";
+import { calcStatSites, calcEightMonths } from "./functions";
+import { TStatSitesData } from "./types";
+import { v1 as uuid } from "uuid";
+
+const todayDate = new Date();
 
 export default function Stat() {
-  const [begin, setBegin] = React.useState<Date | null>(null);
-  const [end, setEnd] = React.useState<Date | null>(null);
-  const [typeData, setTypeData] = React.useState<string | undefined>(undefined);
+  const [begin, setBegin] = React.useState<Date>(
+    new Date(todayDate.getFullYear(), 0, 1)
+  );
+  const [end, setEnd] = React.useState<Date>(
+    new Date(todayDate.getFullYear(), todayDate.getMonth(), 1)
+  );
+  const [typeData, setTypeData] = React.useState<
+    "revenue" | "profit" | "expenses"
+  >("profit");
+
+  const [sitesStat, setSitesStat] = React.useState<Array<TStatSitesData>>([]);
+
+  useEffect(() => {
+    if (begin > end) {
+      setEnd(begin);
+    }
+    const timeBetweenBeginAndEnd = +end - +begin;
+    if (timeBetweenBeginAndEnd > 60 * 60 * 24 * 242 * 1000) {
+      setEnd(calcEightMonths(begin));
+    }
+
+    const statSitesData: Array<TStatSitesData> = calcStatSites(
+      begin,
+      end,
+      typeData
+    );
+    setSitesStat(statSitesData);
+  }, [begin, end, typeData]);
 
   const handleChangeTypeData = (event: SelectChangeEvent) => {
-    setTypeData(event.target.value as string);
+    setTypeData(event.target.value as "revenue" | "profit" | "expenses");
   };
 
   return (
@@ -56,6 +89,14 @@ export default function Stat() {
           />
         </Grid>
       </Grid>
+      <Grid container mt={2}>
+        <StatHeader begin={begin} end={end} />
+      </Grid>
+      <Divider sx={{ height: 0 }} />
+
+      {sitesStat.map((site) => (
+        <StatRow key={uuid()} site={site} />
+      ))}
     </>
   );
 }

@@ -16,11 +16,13 @@ const DatePickerComp: React.FC<TDatePickerComp> = ({
       <DatePicker
         views={["year", "month"]}
         minDate={new Date("2020-01-01")}
-        maxDate={new Date("2024-12-31")}
+        maxDate={new Date("2022-06-30")}
         label={label}
         mask={"__.__.____"}
         value={value}
-        onChange={(newValue) => setValue(newValue)}
+        onChange={(newValue) => {
+          if (newValue !== null) setValue(newValue);
+        }}
         renderInput={(params) => <TextField size="small" {...params} />}
       />
     </LocalizationProvider>
