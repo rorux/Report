@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { Divider } from "@mui/material";
+import { Typography } from "@mui/material";
 import Title from "../Title";
 import DatePickerComp from "../uiElements/DatePickerComp";
 import SelectComp from "../uiElements/SelectComp";
@@ -53,6 +54,11 @@ export default function Stat() {
         <Grid item sm flexGrow={1}>
           <Title>Статистика</Title>
         </Grid>
+        <Grid item pr={2} pt={1}>
+          <Typography variant="body2" color={"#a5a5a5"}>
+            (период не более 8 месяцев)
+          </Typography>
+        </Grid>
         <Grid item mr={1} sx={{ width: 175 }}>
           <DatePickerComp
             value={begin}
@@ -95,7 +101,7 @@ export default function Stat() {
       <Divider sx={{ height: 0 }} />
 
       {sitesStat.map((site) => (
-        <StatRow key={uuid()} site={site} />
+        <StatRow key={uuid()} site={site} typeData={typeData} />
       ))}
     </>
   );

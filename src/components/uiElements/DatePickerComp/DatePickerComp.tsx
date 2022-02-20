@@ -16,7 +16,7 @@ const DatePickerComp: React.FC<TDatePickerComp> = ({
       <DatePicker
         views={["year", "month"]}
         minDate={new Date("2020-01-01")}
-        maxDate={new Date("2022-06-30")}
+        maxDate={new Date("2022-02-28")}
         label={label}
         mask={"__.__.____"}
         value={value}

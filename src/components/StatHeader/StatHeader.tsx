@@ -23,12 +23,12 @@ const StatHeader: React.FC<TStatHeader> = ({ begin, end }) => {
     <>
       <Grid item xs sx={{ textAlign: "left" }} p={2}>
         <Typography variant="overline">
-          <strong>Проекты</strong>
+          <strong>Сайты</strong>
         </Typography>
       </Grid>
       {monthArray.map((month) => (
         <Grid key={month} item xs sx={{ textAlign: "center" }} p={2}>
-          <Typography variant="overline">
+          <Typography variant="overline" color="#555">
             <strong>{month}</strong>
           </Typography>
         </Grid>
