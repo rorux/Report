@@ -1,4 +1,5 @@
 import { sites } from "../../utils/db";
+import { MONTH_MAP } from "./constants";
 
 export const calcEightMonths = (begin: Date) => {
   const beginYear = begin.getFullYear();
@@ -53,4 +54,22 @@ export const calcStatSites = (
   });
 
   return sitesTable;
+};
+
+export const getListPeriods = (begin: Date, end: Date) => {
+  let month = begin;
+  const monthArray = [];
+  while (+month <= +end) {
+    const monthIter = month.getMonth();
+    const yearIter = month.getFullYear();
+    const beginDate = begin.getDate();
+    monthArray.push(`${MONTH_MAP[monthIter]}'${yearIter}`);
+
+    if (monthIter === 11) {
+      month = new Date(yearIter + 1, 0, beginDate);
+    } else {
+      month = new Date(yearIter, monthIter + 1, beginDate);
+    }
+  }
+  return monthArray;
 };

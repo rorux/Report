@@ -8,34 +8,22 @@ import {
   Label,
   ResponsiveContainer,
 } from "recharts";
-import Title from "../Title";
+import { TChart } from "./types";
 
-// Generate Sales Data
-function createData(time: string, amount?: number) {
-  return { time, amount };
-}
+const typeDataMap = {
+  revenue: "Выручка",
+  profit: "Прибыль",
+  expenses: "Расходы",
+};
 
-const data = [
-  createData("00:00", 0),
-  createData("03:00", 300),
-  createData("06:00", 600),
-  createData("09:00", 800),
-  createData("12:00", 1500),
-  createData("15:00", 2000),
-  createData("18:00", 2400),
-  createData("21:00", 2400),
-  createData("24:00", undefined),
-];
-
-export default function Chart() {
+const Chart: React.FC<TChart> = ({ typeData, dataChart }) => {
   const theme = useTheme();
 
   return (
     <React.Fragment>
-      <Title>Today</Title>
       <ResponsiveContainer>
         <LineChart
-          data={data}
+          data={dataChart}
           margin={{
             top: 16,
             right: 16,
@@ -61,7 +49,7 @@ export default function Chart() {
                 ...theme.typography.body1,
               }}
             >
-              Sales ($)
+              {typeDataMap[typeData]}
             </Label>
           </YAxis>
           <Line
@@ -75,4 +63,6 @@ export default function Chart() {
       </ResponsiveContainer>
     </React.Fragment>
   );
-}
+};
+
+export default Chart;

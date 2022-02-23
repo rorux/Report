@@ -9,7 +9,7 @@ import Main from "../app/Main";
 const mdTheme = createTheme();
 
 const Dashboard = () => {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };

@@ -8,7 +8,7 @@ import DatePickerComp from "../uiElements/DatePickerComp";
 import SelectComp from "../uiElements/SelectComp";
 import StatHeader from "../StatHeader";
 import StatRow from "../StatRow";
-import { calcStatSites, calcEightMonths } from "./functions";
+import { calcStatSites, calcEightMonths, getListPeriods } from "./functions";
 import { TStatSitesData } from "./types";
 import { v1 as uuid } from "uuid";
 
@@ -26,6 +26,7 @@ export default function Stat() {
   >("profit");
 
   const [sitesStat, setSitesStat] = React.useState<Array<TStatSitesData>>([]);
+  const [listPeriods, setListPeriods] = React.useState<Array<string>>([]);
 
   useEffect(() => {
     if (begin > end) {
@@ -42,6 +43,7 @@ export default function Stat() {
       typeData
     );
     setSitesStat(statSitesData);
+    setListPeriods(getListPeriods(begin, end));
   }, [begin, end, typeData]);
 
   const handleChangeTypeData = (event: SelectChangeEvent) => {
@@ -96,12 +98,17 @@ export default function Stat() {
         </Grid>
       </Grid>
       <Grid container mt={2}>
-        <StatHeader begin={begin} end={end} />
+        <StatHeader monthArray={listPeriods} />
       </Grid>
       <Divider sx={{ height: 0 }} />
 
       {sitesStat.map((site) => (
-        <StatRow key={uuid()} site={site} typeData={typeData} />
+        <StatRow
+          key={uuid()}
+          site={site}
+          typeData={typeData}
+          monthArray={listPeriods}
+        />
       ))}
     </>
   );

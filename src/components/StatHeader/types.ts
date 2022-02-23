@@ -1,4 +1,3 @@
 export type TStatHeader = {
-  begin: Date;
-  end: Date;
+  monthArray: Array<string>;
 };
